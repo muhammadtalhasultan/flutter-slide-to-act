@@ -178,12 +178,10 @@ class SlideActionState extends State<SlideAction>
                             child: Container(
                               key: _sliderKey,
                               child: GestureDetector(
-                                onHorizontalDragUpdate: (details) {
-                                  setState(() {
-                                    _dx = (_dx + details.delta.dx)
-                                        .clamp(0.0, _maxDx);
-                                  });
-                                },
+                                onHorizontalDragStart:
+                                    onHorizontalDragStartUpdate,
+                                onHorizontalDragUpdate:
+                                    onHorizontalDragStartUpdate,
                                 onHorizontalDragEnd: (details) async {
                                   _endDx = _dx;
                                   if (_progress <= 0.8 ||
@@ -240,6 +238,12 @@ class SlideActionState extends State<SlideAction>
         ),
       ),
     );
+  }
+
+  void onHorizontalDragStartUpdate(details) {
+    setState(() {
+      _dx = (_dx + details.delta.dx).clamp(0.0, _maxDx);
+    });
   }
 
   /// Call this method to revert the animations
