@@ -1,3 +1,5 @@
+[![Pub](https://img.shields.io/pub/v/slide_to_act.svg)](https://pub.dartlang.org/packages/slide_to_act)
+
 # Flutter Slide To Act
 
 A simple slide-to-unlock widget for Flutter inspired by the [Android Slide To Act](https://github.com/cortinico/slidetoact).
