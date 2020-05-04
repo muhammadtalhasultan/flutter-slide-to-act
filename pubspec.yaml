@@ -1,0 +1,15 @@
+name: slide_to_act
+description: A simple slide-to-action widget for Flutter
+version: 0.1.0
+homepage: https://github.com/imtoori/flutter_slide_to_act
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
