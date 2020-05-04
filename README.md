@@ -25,6 +25,8 @@ An example app showing all the features is available in this repo in the folder 
 
 Run the app to get an idea of the component.
 
+Or just go to this link to see it compiled for the web https://imtoori.dev/flutter-slide-to-act/#/
+
 ## Contributions
 
 Contributions of any kind are more than welcome! Feel free to fork and improve the project in any way you want, make a pull request, or open an issue.
