@@ -1,3 +1,7 @@
+## [0.1.2] - 05/05/2020
+
+- Properly dispose animation controllers
+
 ## [0.1.1] - 04/05/2020
 
 - Handle onHorizontalDragStart
