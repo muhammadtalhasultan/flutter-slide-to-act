@@ -5,7 +5,7 @@
 A simple slide-to-unlock widget for Flutter inspired by the [Android Slide To Act](https://github.com/cortinico/slidetoact).
 
 <p align="center">
-  <img src="https://github.com/imtoori/flutter-slide-to-act/blob/master/assets/main.gif" alt="sample gif"/>
+  <img src="https://raw.githubusercontent.com/imtoori/flutter-slide-to-act/master/assets/main.gif" alt="sample gif"/>
 </p>
 
 ## Getting started
