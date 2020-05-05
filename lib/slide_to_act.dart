@@ -96,7 +96,8 @@ class SlideActionState extends State<SlideAction>
   bool submitted = false;
   AnimationController _checkAnimationController,
       _shrinkAnimationController,
-      _resizeAnimationController;
+      _resizeAnimationController,
+      _cancelAnimationController;
 
   @override
   Widget build(BuildContext context) {
@@ -178,10 +179,7 @@ class SlideActionState extends State<SlideAction>
                             child: Container(
                               key: _sliderKey,
                               child: GestureDetector(
-                                onHorizontalDragStart:
-                                    onHorizontalDragStartUpdate,
-                                onHorizontalDragUpdate:
-                                    onHorizontalDragStartUpdate,
+                                onHorizontalDragUpdate: onHorizontalDragUpdate,
                                 onHorizontalDragEnd: (details) async {
                                   _endDx = _dx;
                                   if (_progress <= 0.8 ||
@@ -240,7 +238,7 @@ class SlideActionState extends State<SlideAction>
     );
   }
 
-  void onHorizontalDragStartUpdate(details) {
+  void onHorizontalDragUpdate(DragUpdateDetails details) {
     setState(() {
       _dx = (_dx + details.delta.dx).clamp(0.0, _maxDx);
     });
@@ -260,14 +258,7 @@ class SlideActionState extends State<SlideAction>
   }
 
   Future _checkAnimation() async {
-    if (_checkAnimationController == null) {
-      _checkAnimationController = AnimationController(
-        vsync: this,
-        duration: widget.animationDuration,
-      );
-    } else {
-      _checkAnimationController.reset();
-    }
+    _checkAnimationController.reset();
 
     Tween(
       begin: 0,
@@ -286,14 +277,7 @@ class SlideActionState extends State<SlideAction>
   }
 
   Future _shrinkAnimation() async {
-    if (_shrinkAnimationController == null) {
-      _shrinkAnimationController = AnimationController(
-        vsync: this,
-        duration: widget.animationDuration,
-      );
-    } else {
-      _shrinkAnimationController.reset();
-    }
+    _shrinkAnimationController.reset();
 
     final diff = _initialContainerWidth - widget.height;
     Tween(
@@ -318,14 +302,7 @@ class SlideActionState extends State<SlideAction>
   }
 
   Future _resizeAnimation() async {
-    if (_resizeAnimationController == null) {
-      _resizeAnimationController = AnimationController(
-        vsync: this,
-        duration: widget.animationDuration,
-      );
-    } else {
-      _resizeAnimationController.reset();
-    }
+    _resizeAnimationController.reset();
 
     Tween(
       begin: 0,
@@ -344,29 +321,44 @@ class SlideActionState extends State<SlideAction>
   }
 
   Future _cancelAnimation() async {
-    final animationController = AnimationController(
-      vsync: this,
-      duration: widget.animationDuration,
-    );
+    _cancelAnimationController.reset();
     Tween(
       begin: 0,
       end: 1,
     ).animate(CurvedAnimation(
-      parent: animationController,
+      parent: _cancelAnimationController,
       curve: Curves.slowMiddle,
     )..addListener(() {
         if (mounted) {
           setState(() {
-            _dx = (_endDx - (_endDx * animationController.value));
+            _dx = (_endDx - (_endDx * _cancelAnimationController.value));
           });
         }
       }));
-    animationController.forward().orCancel;
+    _cancelAnimationController.forward().orCancel;
   }
 
   @override
   void initState() {
     super.initState();
+
+    _cancelAnimationController = AnimationController(
+      vsync: this,
+      duration: widget.animationDuration,
+    );
+    _checkAnimationController = AnimationController(
+      vsync: this,
+      duration: widget.animationDuration,
+    );
+    _shrinkAnimationController = AnimationController(
+      vsync: this,
+      duration: widget.animationDuration,
+    );
+
+    _resizeAnimationController = AnimationController(
+      vsync: this,
+      duration: widget.animationDuration,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox containerBox =
@@ -380,5 +372,14 @@ class SlideActionState extends State<SlideAction>
       _maxDx =
           _containerWidth - (sliderWidth / 2) - 40 - widget.sliderButtonYOffset;
     });
+  }
+
+  @override
+  void dispose() {
+    _cancelAnimationController.dispose();
+    _checkAnimationController.dispose();
+    _shrinkAnimationController.dispose();
+    _resizeAnimationController.dispose();
+    super.dispose();
   }
 }
