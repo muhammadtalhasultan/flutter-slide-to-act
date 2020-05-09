@@ -260,19 +260,21 @@ class SlideActionState extends State<SlideAction>
   Future _checkAnimation() async {
     _checkAnimationController.reset();
 
-    Tween(
+    final animation = Tween<double>(
       begin: 0,
       end: 1,
     ).animate(CurvedAnimation(
       parent: _checkAnimationController,
       curve: Curves.slowMiddle,
-    )..addListener(() {
-        if (mounted) {
-          setState(() {
-            _checkAnimationDx = _checkAnimationController.value;
-          });
-        }
-      }));
+    ));
+
+    animation.addListener(() {
+      if (mounted) {
+        setState(() {
+          _checkAnimationDx = animation.value;
+        });
+      }
+    });
     await _checkAnimationController.forward().orCancel;
   }
 
@@ -280,20 +282,21 @@ class SlideActionState extends State<SlideAction>
     _shrinkAnimationController.reset();
 
     final diff = _initialContainerWidth - widget.height;
-    Tween(
+    final animation = Tween<double>(
       begin: 0,
       end: 1,
     ).animate(CurvedAnimation(
       parent: _shrinkAnimationController,
-      curve: Curves.elasticIn,
-    )..addListener(() {
-        if (mounted) {
-          setState(() {
-            _containerWidth = _initialContainerWidth -
-                (diff * _shrinkAnimationController.value);
-          });
-        }
-      }));
+      curve: Curves.easeOutCirc,
+    ));
+
+    animation.addListener(() {
+      if (mounted) {
+        setState(() {
+          _containerWidth = _initialContainerWidth - (diff * animation.value);
+        });
+      }
+    });
 
     setState(() {
       submitted = true;
@@ -304,37 +307,41 @@ class SlideActionState extends State<SlideAction>
   Future _resizeAnimation() async {
     _resizeAnimationController.reset();
 
-    Tween(
+    final animation = Tween<double>(
       begin: 0,
       end: 1,
     ).animate(CurvedAnimation(
       parent: _resizeAnimationController,
-      curve: Curves.elasticIn,
-    )..addListener(() {
-        if (mounted) {
-          setState(() {
-            _dz = 1 - _resizeAnimationController.value;
-          });
-        }
-      }));
+      curve: Curves.easeInBack,
+    ));
+
+    animation.addListener(() {
+      if (mounted) {
+        setState(() {
+          _dz = 1 - animation.value;
+        });
+      }
+    });
     await _resizeAnimationController.forward().orCancel;
   }
 
   Future _cancelAnimation() async {
     _cancelAnimationController.reset();
-    Tween(
+    final animation = Tween<double>(
       begin: 0,
       end: 1,
     ).animate(CurvedAnimation(
       parent: _cancelAnimationController,
-      curve: Curves.slowMiddle,
-    )..addListener(() {
-        if (mounted) {
-          setState(() {
-            _dx = (_endDx - (_endDx * _cancelAnimationController.value));
-          });
-        }
-      }));
+      curve: Curves.fastOutSlowIn,
+    ));
+
+    animation.addListener(() {
+      if (mounted) {
+        setState(() {
+          _dx = (_endDx - (_endDx * animation.value));
+        });
+      }
+    });
     _cancelAnimationController.forward().orCancel;
   }
 
