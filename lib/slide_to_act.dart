@@ -123,7 +123,7 @@ class SlideActionState extends State<SlideAction>
                     transform: Matrix4.rotationY(widget.reversed ? pi : 0),
                     child: Center(
                       child: Stack(
-                        overflow: Overflow.clip,
+                        clipBehavior: Clip.antiAlias,
                         children: <Widget>[
                           widget.submittedIcon ??
                               Icon(
@@ -149,7 +149,7 @@ class SlideActionState extends State<SlideAction>
                   )
                 : Stack(
                     alignment: Alignment.center,
-                    overflow: Overflow.visible,
+                    clipBehavior: Clip.none,
                     children: <Widget>[
                       Opacity(
                         opacity: 1 - 1 * _progress,
