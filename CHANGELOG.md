@@ -1,3 +1,7 @@
+## [0.1.3+1] - 11/10/2020
+
+- Fixed recent flutter version compatibility issue
+
 ## [0.1.3] - 09/05/2020
 
 - Fixed a bug that was not applying curves to animations
