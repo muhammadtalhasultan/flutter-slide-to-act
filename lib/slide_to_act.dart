@@ -32,6 +32,11 @@ class SlideAction extends StatefulWidget {
   /// The text showed in the default Text widget
   final String text;
 
+  /// Text style which is applied on the Text widget.
+  ///
+  /// By default, the text is colored using [innerColor].
+  final TextStyle textStyle;
+
   /// The borderRadius of the sliding icon and of the background
   final double borderRadius;
 
@@ -75,6 +80,7 @@ class SlideAction extends StatefulWidget {
     this.child,
     this.innerColor,
     this.text,
+    this.textStyle,
     this.sliderButtonIcon,
   }) : super(key: key);
   @override
@@ -161,11 +167,14 @@ class SlideActionState extends State<SlideAction>
                               Text(
                                 widget.text ?? 'Slide to act',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: widget.innerColor ??
-                                      Theme.of(context).primaryIconTheme.color,
-                                  fontSize: 24,
-                                ),
+                                style: widget.textStyle ??
+                                    TextStyle(
+                                      color: widget.innerColor ??
+                                          Theme.of(context)
+                                              .primaryIconTheme
+                                              .color,
+                                      fontSize: 24,
+                                    ),
                               ),
                         ),
                       ),
