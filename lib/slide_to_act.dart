@@ -15,6 +15,9 @@ class SlideAction extends StatefulWidget {
   /// The offset on the y axis of the slider icon
   final double sliderButtonYOffset;
 
+  /// If the slider icon rotates
+  final bool sliderRotate;
+
   /// The child that is rendered instead of the default Text widget
   final Widget child;
 
@@ -63,6 +66,7 @@ class SlideAction extends StatefulWidget {
     this.sliderButtonIconSize = 24,
     this.sliderButtonIconPadding = 16,
     this.sliderButtonYOffset = 0,
+    this.sliderRotate = true,
     this.height = 70,
     this.outerColor,
     this.borderRadius = 52,
@@ -205,7 +209,9 @@ class SlideActionState extends State<SlideAction>
                                       padding: EdgeInsets.all(
                                           widget.sliderButtonIconPadding),
                                       child: Transform.rotate(
-                                        angle: -pi * _progress,
+                                        angle: widget.sliderRotate
+                                            ? -pi * _progress
+                                            : 0,
                                         child: Center(
                                           child: widget.sliderButtonIcon ??
                                               Icon(
