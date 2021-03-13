@@ -19,42 +19,42 @@ class SlideAction extends StatefulWidget {
   final bool sliderRotate;
 
   /// The child that is rendered instead of the default Text widget
-  final Widget child;
+  final Widget? child;
 
   /// The height of the component
   final double height;
 
   /// The color of the inner circular button, of the tick icon of the text.
   /// If not set, this attribute defaults to primaryIconTheme.
-  final Color innerColor;
+  final Color? innerColor;
 
   /// The color of the external area and of the arrow icon.
   /// If not set, this attribute defaults to accentColor from your theme.
-  final Color outerColor;
+  final Color? outerColor;
 
   /// The text showed in the default Text widget
-  final String text;
+  final String? text;
 
   /// Text style which is applied on the Text widget.
   ///
   /// By default, the text is colored using [innerColor].
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   /// The borderRadius of the sliding icon and of the background
   final double borderRadius;
 
   /// Callback called on submit
   /// If this is null the component will not animate to complete
-  final VoidCallback onSubmit;
+  final VoidCallback? onSubmit;
 
   /// Elevation of the component
   final double elevation;
 
   /// The widget to render instead of the default icon
-  final Widget sliderButtonIcon;
+  final Widget? sliderButtonIcon;
 
   /// The widget to render instead of the default submitted icon
-  final Widget submittedIcon;
+  final Widget? submittedIcon;
 
   /// The duration of the animations
   final Duration animationDuration;
@@ -67,7 +67,7 @@ class SlideAction extends StatefulWidget {
 
   /// Create a new instance of the widget
   const SlideAction({
-    Key key,
+    Key? key,
     this.sliderButtonIconSize = 24,
     this.sliderButtonIconPadding = 16,
     this.sliderButtonYOffset = 0,
@@ -101,10 +101,10 @@ class SlideActionState extends State<SlideAction>
   double get _progress => _dx == 0 ? 0 : _dx / _maxDx;
   double _endDx = 0;
   double _dz = 1;
-  double _initialContainerWidth, _containerWidth;
+  double? _initialContainerWidth, _containerWidth;
   double _checkAnimationDx = 0;
   bool submitted = false;
-  AnimationController _checkAnimationController,
+  late AnimationController _checkAnimationController,
       _shrinkAnimationController,
       _resizeAnimationController,
       _cancelAnimationController;
@@ -205,7 +205,7 @@ class SlideActionState extends State<SlideAction>
 
                                     await _checkAnimation();
 
-                                    widget.onSubmit();
+                                    widget.onSubmit!();
                                   }
                                 },
                                 child: Padding(
@@ -296,7 +296,7 @@ class SlideActionState extends State<SlideAction>
   Future _shrinkAnimation() async {
     _shrinkAnimationController.reset();
 
-    final diff = _initialContainerWidth - widget.height;
+    final diff = _initialContainerWidth! - widget.height;
     final animation = Tween<double>(
       begin: 0,
       end: 1,
@@ -308,7 +308,7 @@ class SlideActionState extends State<SlideAction>
     animation.addListener(() {
       if (mounted) {
         setState(() {
-          _containerWidth = _initialContainerWidth - (diff * animation.value);
+          _containerWidth = _initialContainerWidth! - (diff * animation.value);
         });
       }
     });
@@ -382,17 +382,20 @@ class SlideActionState extends State<SlideAction>
       duration: widget.animationDuration,
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       final RenderBox containerBox =
-          _containerKey.currentContext.findRenderObject();
+          _containerKey.currentContext!.findRenderObject() as RenderBox;
       _containerWidth = containerBox.size.width;
       _initialContainerWidth = _containerWidth;
 
-      final RenderBox sliderBox = _sliderKey.currentContext.findRenderObject();
+      final RenderBox sliderBox =
+          _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
 
-      _maxDx =
-          _containerWidth - (sliderWidth / 2) - 40 - widget.sliderButtonYOffset;
+      _maxDx = _containerWidth! -
+          (sliderWidth / 2) -
+          40 -
+          widget.sliderButtonYOffset;
     });
   }
 

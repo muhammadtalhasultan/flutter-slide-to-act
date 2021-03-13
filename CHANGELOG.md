@@ -1,3 +1,9 @@
+## [1.0.0] - 13/03/2021
+
+- Migrated to NNBD
+- Add sliderRotate bool option
+- Add possibility to customize textStyle
+
 ## [0.1.3+1] - 11/10/2020
 
 - Fixed recent flutter version compatibility issue
