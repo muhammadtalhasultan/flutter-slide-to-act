@@ -222,6 +222,16 @@ class HomePage extends StatelessWidget {
                 );
               },
             ),
+            Builder(
+              builder: (context) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SlideAction(
+                    sliderRotate: false,
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
