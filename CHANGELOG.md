@@ -1,4 +1,4 @@
-## [1.0.0] - 13/03/2021
+## [2.0.1] - 13/03/2021
 
 - Migrated to NNBD
 - Add sliderRotate bool option
