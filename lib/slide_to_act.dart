@@ -125,7 +125,7 @@ class SlideActionState extends State<SlideAction>
               : BoxConstraints.expand(height: widget.height),
           child: Material(
             elevation: widget.elevation,
-            color: widget.outerColor ?? Theme.of(context).accentColor,
+            color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(widget.borderRadius),
             child: submitted
                 ? Transform(
@@ -149,7 +149,7 @@ class SlideActionState extends State<SlideAction>
                               alignment: Alignment.centerRight,
                               child: Container(
                                 color: widget.outerColor ??
-                                    Theme.of(context).accentColor,
+                                    Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                           ),
@@ -214,6 +214,10 @@ class SlideActionState extends State<SlideAction>
                                   child: Material(
                                     borderRadius: BorderRadius.circular(
                                         widget.borderRadius),
+                                    color: widget.innerColor ??
+                                        Theme.of(context)
+                                            .primaryIconTheme
+                                            .color,
                                     child: Container(
                                       padding: EdgeInsets.all(
                                           widget.sliderButtonIconPadding),
@@ -229,15 +233,11 @@ class SlideActionState extends State<SlideAction>
                                                     widget.sliderButtonIconSize,
                                                 color: widget.outerColor ??
                                                     Theme.of(context)
-                                                        .accentColor,
+                                                        .colorScheme.secondary,
                                               ),
                                         ),
                                       ),
                                     ),
-                                    color: widget.innerColor ??
-                                        Theme.of(context)
-                                            .primaryIconTheme
-                                            .color,
                                   ),
                                 ),
                               ),
@@ -382,7 +382,7 @@ class SlideActionState extends State<SlideAction>
       duration: widget.animationDuration,
     );
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox containerBox =
           _containerKey.currentContext!.findRenderObject() as RenderBox;
       _containerWidth = containerBox.size.width;
