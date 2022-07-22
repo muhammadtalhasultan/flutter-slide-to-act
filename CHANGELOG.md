@@ -1,6 +1,7 @@
-## [2.0.2] - 22/07/2022
+## [3.0.0] - 22/07/2022
 
-- Made 
+- Bugfix: The slide distance is calculated correctly even if size properties changes. 
+    - BREAKING CHANGE: replaced sliderButtonYOffset by horizontalButtonPadding
 
 ## [2.0.1] - 13/03/2021
 

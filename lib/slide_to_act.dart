@@ -12,9 +12,6 @@ class SlideAction extends StatefulWidget {
   /// Tha padding of the sliding icon
   final double sliderButtonIconPadding;
 
-  /// The offset on the y axis of the slider icon
-  final double sliderButtonYOffset;
-
   /// If the slider icon rotates
   final bool sliderRotate;
 
@@ -65,16 +62,13 @@ class SlideAction extends StatefulWidget {
   /// the alignment of the widget once it's submitted
   final Alignment alignment;
 
-  final maxDx;
-
-  final double horizontalPadding;
+  final double horizontalButtonPadding;
 
   /// Create a new instance of the widget
   const SlideAction({
     Key? key,
     this.sliderButtonIconSize = 24,
     this.sliderButtonIconPadding = 16,
-    this.sliderButtonYOffset = 0,
     this.sliderRotate = true,
     this.height = 70,
     this.outerColor,
@@ -90,8 +84,7 @@ class SlideAction extends StatefulWidget {
     this.text,
     this.textStyle,
     this.sliderButtonIcon,
-    this.maxDx,
-    this.horizontalPadding,
+    this.horizontalButtonPadding = 0,
   }) : super(key: key);
   @override
   SlideActionState createState() => SlideActionState();
@@ -176,7 +169,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                         ),
                       ),
                       Positioned(
-                        left: widget.sliderButtonYOffset,
+                        left: 0,
                         child: Transform.scale(
                           scale: _dz,
                           origin: Offset(_dx, 0),
@@ -201,7 +194,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                   }
                                 },
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: widget.horizontalPadding),
+                                  padding: EdgeInsets.symmetric(horizontal: widget.horizontalButtonPadding),
                                   child: Material(
                                     borderRadius: BorderRadius.circular(widget.borderRadius),
                                     child: Container(
@@ -371,13 +364,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
 
-      print("Container Width: $_containerWidth");
-      print("Slider Width: $sliderWidth");
-      print("sliderButtonYOffset: ${widget.sliderButtonYOffset}");
-
-      _maxDx = widget.maxDx;
-
-      //_maxDx = _containerWidth! - (sliderWidth / 2) - 40 - widget.sliderButtonYOffset;
+      _maxDx = _containerWidth! - sliderWidth;
     });
   }
 
