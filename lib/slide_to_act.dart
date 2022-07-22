@@ -65,6 +65,8 @@ class SlideAction extends StatefulWidget {
   /// the alignment of the widget once it's submitted
   final Alignment alignment;
 
+  final maxDx;
+
   /// Create a new instance of the widget
   const SlideAction({
     Key? key,
@@ -86,14 +88,14 @@ class SlideAction extends StatefulWidget {
     this.text,
     this.textStyle,
     this.sliderButtonIcon,
+    this.maxDx,
   }) : super(key: key);
   @override
   SlideActionState createState() => SlideActionState();
 }
 
 /// Use a GlobalKey to access the state. This is the only way to call [SlideActionState.reset]
-class SlideActionState extends State<SlideAction>
-    with TickerProviderStateMixin {
+class SlideActionState extends State<SlideAction> with TickerProviderStateMixin {
   final GlobalKey _containerKey = GlobalKey();
   final GlobalKey _sliderKey = GlobalKey();
   double _dx = 0;
@@ -104,10 +106,7 @@ class SlideActionState extends State<SlideAction>
   double? _initialContainerWidth, _containerWidth;
   double _checkAnimationDx = 0;
   bool submitted = false;
-  late AnimationController _checkAnimationController,
-      _shrinkAnimationController,
-      _resizeAnimationController,
-      _cancelAnimationController;
+  late AnimationController _checkAnimationController, _shrinkAnimationController, _resizeAnimationController, _cancelAnimationController;
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +119,7 @@ class SlideActionState extends State<SlideAction>
           key: _containerKey,
           height: widget.height,
           width: _containerWidth,
-          constraints: _containerWidth != null
-              ? null
-              : BoxConstraints.expand(height: widget.height),
+          constraints: _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
           child: Material(
             elevation: widget.elevation,
             color: widget.outerColor ?? Theme.of(context).accentColor,
@@ -138,18 +135,15 @@ class SlideActionState extends State<SlideAction>
                           widget.submittedIcon ??
                               Icon(
                                 Icons.done,
-                                color: widget.innerColor ??
-                                    Theme.of(context).primaryIconTheme.color,
+                                color: widget.innerColor ?? Theme.of(context).primaryIconTheme.color,
                               ),
                           Positioned.fill(
                             right: 0,
                             child: Transform(
-                              transform: Matrix4.rotationY(
-                                  _checkAnimationDx * (pi / 2)),
+                              transform: Matrix4.rotationY(_checkAnimationDx * (pi / 2)),
                               alignment: Alignment.centerRight,
                               child: Container(
-                                color: widget.outerColor ??
-                                    Theme.of(context).accentColor,
+                                color: widget.outerColor ?? Theme.of(context).accentColor,
                               ),
                             ),
                           ),
@@ -165,18 +159,14 @@ class SlideActionState extends State<SlideAction>
                         opacity: 1 - 1 * _progress,
                         child: Transform(
                           alignment: Alignment.center,
-                          transform:
-                              Matrix4.rotationY(widget.reversed ? pi : 0),
+                          transform: Matrix4.rotationY(widget.reversed ? pi : 0),
                           child: widget.child ??
                               Text(
                                 widget.text ?? 'Slide to act',
                                 textAlign: TextAlign.center,
                                 style: widget.textStyle ??
                                     TextStyle(
-                                      color: widget.innerColor ??
-                                          Theme.of(context)
-                                              .primaryIconTheme
-                                              .color,
+                                      color: widget.innerColor ?? Theme.of(context).primaryIconTheme.color,
                                       fontSize: 24,
                                     ),
                               ),
@@ -195,8 +185,7 @@ class SlideActionState extends State<SlideAction>
                                 onHorizontalDragUpdate: onHorizontalDragUpdate,
                                 onHorizontalDragEnd: (details) async {
                                   _endDx = _dx;
-                                  if (_progress <= 0.8 ||
-                                      widget.onSubmit == null) {
+                                  if (_progress <= 0.8 || widget.onSubmit == null) {
                                     _cancelAnimation();
                                   } else {
                                     await _resizeAnimation();
@@ -209,35 +198,24 @@ class SlideActionState extends State<SlideAction>
                                   }
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: Material(
-                                    borderRadius: BorderRadius.circular(
-                                        widget.borderRadius),
+                                    borderRadius: BorderRadius.circular(widget.borderRadius),
                                     child: Container(
-                                      padding: EdgeInsets.all(
-                                          widget.sliderButtonIconPadding),
+                                      padding: EdgeInsets.all(widget.sliderButtonIconPadding),
                                       child: Transform.rotate(
-                                        angle: widget.sliderRotate
-                                            ? -pi * _progress
-                                            : 0,
+                                        angle: widget.sliderRotate ? -pi * _progress : 0,
                                         child: Center(
                                           child: widget.sliderButtonIcon ??
                                               Icon(
                                                 Icons.arrow_forward,
-                                                size:
-                                                    widget.sliderButtonIconSize,
-                                                color: widget.outerColor ??
-                                                    Theme.of(context)
-                                                        .accentColor,
+                                                size: widget.sliderButtonIconSize,
+                                                color: widget.outerColor ?? Theme.of(context).accentColor,
                                               ),
                                         ),
                                       ),
                                     ),
-                                    color: widget.innerColor ??
-                                        Theme.of(context)
-                                            .primaryIconTheme
-                                            .color,
+                                    color: widget.innerColor ?? Theme.of(context).primaryIconTheme.color,
                                   ),
                                 ),
                               ),
@@ -383,19 +361,20 @@ class SlideActionState extends State<SlideAction>
     );
 
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      final RenderBox containerBox =
-          _containerKey.currentContext!.findRenderObject() as RenderBox;
+      final RenderBox containerBox = _containerKey.currentContext!.findRenderObject() as RenderBox;
       _containerWidth = containerBox.size.width;
       _initialContainerWidth = _containerWidth;
 
-      final RenderBox sliderBox =
-          _sliderKey.currentContext!.findRenderObject() as RenderBox;
+      final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
 
-      _maxDx = _containerWidth! -
-          (sliderWidth / 2) -
-          40 -
-          widget.sliderButtonYOffset;
+      print("Container Width: $_containerWidth");
+      print("Slider Width: $sliderWidth");
+      print("sliderButtonYOffset: ${widget.sliderButtonYOffset}");
+
+      _maxDx = widget.maxDx;
+
+      //_maxDx = _containerWidth! - (sliderWidth / 2) - 40 - widget.sliderButtonYOffset;
     });
   }
 
