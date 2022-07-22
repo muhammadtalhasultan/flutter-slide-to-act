@@ -67,6 +67,8 @@ class SlideAction extends StatefulWidget {
 
   final maxDx;
 
+  final double horizontalPadding;
+
   /// Create a new instance of the widget
   const SlideAction({
     Key? key,
@@ -89,6 +91,7 @@ class SlideAction extends StatefulWidget {
     this.textStyle,
     this.sliderButtonIcon,
     this.maxDx,
+    this.horizontalPadding,
   }) : super(key: key);
   @override
   SlideActionState createState() => SlideActionState();
@@ -198,7 +201,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                   }
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  padding: EdgeInsets.symmetric(horizontal: widget.horizontalPadding),
                                   child: Material(
                                     borderRadius: BorderRadius.circular(widget.borderRadius),
                                     child: Container(
