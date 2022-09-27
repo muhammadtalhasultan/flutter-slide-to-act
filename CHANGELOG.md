@@ -1,3 +1,7 @@
+## [3.0.1] - 27/09/2022
+
+- Bugfix: Added null check for _containerKey.currentContext and _sliderKey.currentContext. Added a fallback in case that it is not available. Also added a security check if Widget is still mounted to widget tree
+
 ## [3.0.0] - 22/07/2022
 
 - Bugfix: The slide distance is calculated correctly even if size properties changes. 

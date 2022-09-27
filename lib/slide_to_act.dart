@@ -357,14 +357,23 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
     );
 
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      final RenderBox containerBox = _containerKey.currentContext!.findRenderObject() as RenderBox;
-      _containerWidth = containerBox.size.width;
-      _initialContainerWidth = _containerWidth;
+      if (mounted) {
+        if (_containerKey.currentContext != null && _sliderKey.currentContext != null) {
+          final RenderBox containerBox = _containerKey.currentContext!.findRenderObject() as RenderBox;
+          _containerWidth = containerBox.size.width;
+          _initialContainerWidth = _containerWidth;
 
-      final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
-      final sliderWidth = sliderBox.size.width;
+          final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
+          final sliderWidth = sliderBox.size.width;
 
-      _maxDx = _containerWidth! - sliderWidth;
+          _maxDx = _containerWidth! - sliderWidth;
+        } else {
+          //this is just a stupid fallback, but better than _maxDx = 0
+          _maxDx = MediaQuery.of(context).size.width / 2;
+        }
+      } else {
+        //Widget does not exist anymore
+      }
     });
   }
 
