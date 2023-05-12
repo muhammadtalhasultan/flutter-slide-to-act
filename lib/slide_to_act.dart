@@ -125,7 +125,7 @@ class SlideActionState extends State<SlideAction>
               : BoxConstraints.expand(height: widget.height),
           child: Material(
             elevation: widget.elevation,
-            color: widget.outerColor ?? Theme.of(context).accentColor,
+            color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(widget.borderRadius),
             child: submitted
                 ? Transform(
@@ -149,7 +149,7 @@ class SlideActionState extends State<SlideAction>
                               alignment: Alignment.centerRight,
                               child: Container(
                                 color: widget.outerColor ??
-                                    Theme.of(context).accentColor,
+                                    Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                           ),
@@ -229,7 +229,7 @@ class SlideActionState extends State<SlideAction>
                                                     widget.sliderButtonIconSize,
                                                 color: widget.outerColor ??
                                                     Theme.of(context)
-                                                        .accentColor,
+                                                        .colorScheme.secondary,
                                               ),
                                         ),
                                       ),
