@@ -1,10 +1,10 @@
 name: slide_to_act
 description: A simple slide-to-action widget for Flutter. It's really customizable and it adapts to your theme.
-version: 2.0.1
+version: 2.1.0
 homepage: https://github.com/imtoori/flutter-slide-to-act
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <4.0.0"
 
 dependencies:
   flutter:

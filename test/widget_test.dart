@@ -43,7 +43,7 @@ void main() {
       home: Scaffold(
         body: Builder(builder: (context) {
           return SlideAction(
-            textStyle: Theme.of(context).textTheme.caption!.copyWith(
+            textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: Colors.red,
                 ),
           );
