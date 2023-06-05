@@ -229,7 +229,8 @@ class SlideActionState extends State<SlideAction>
                                                     widget.sliderButtonIconSize,
                                                 color: widget.outerColor ??
                                                     Theme.of(context)
-                                                        .accentColor,
+                                                        .colorScheme
+                                                        .secondary,
                                               ),
                                         ),
                                       ),
