@@ -304,7 +304,7 @@ class SlideActionState extends State<SlideAction>
         });
       }
     });
-    await _checkAnimationController.forward().orCancel;
+    await _checkAnimationController.forward();
   }
 
   Future _shrinkAnimation() async {
@@ -330,7 +330,7 @@ class SlideActionState extends State<SlideAction>
     setState(() {
       submitted = true;
     });
-    await _shrinkAnimationController.forward().orCancel;
+    await _shrinkAnimationController.forward();
   }
 
   Future _resizeAnimation() async {
@@ -351,7 +351,7 @@ class SlideActionState extends State<SlideAction>
         });
       }
     });
-    await _resizeAnimationController.forward().orCancel;
+    await _resizeAnimationController.forward();
   }
 
   Future _cancelAnimation() async {
@@ -371,7 +371,7 @@ class SlideActionState extends State<SlideAction>
         });
       }
     });
-    _cancelAnimationController.forward().orCancel;
+    _cancelAnimationController.forward();
   }
 
   @override
