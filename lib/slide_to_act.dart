@@ -52,7 +52,7 @@ class SlideAction extends StatefulWidget {
 
   /// Callback called on submit
   /// If this is null the component will not animate to complete
-  final VoidCallback? onSubmit;
+  final Future? Function()? onSubmit;
 
   /// Elevation of the component
   final double elevation;
@@ -216,7 +216,11 @@ class SlideActionState extends State<SlideAction>
 
                                     await _checkAnimation();
 
-                                    widget.onSubmit!();
+                                    widget.onSubmit!()?.then((value) {
+                                      _resizeAnimationController.reset();
+                                      _shrinkAnimationController.reset();
+                                      _checkAnimationController.reset();
+                                    });
                                   }
                                 },
                                 child: Padding(
@@ -394,7 +398,7 @@ class SlideActionState extends State<SlideAction>
       duration: widget.animationDuration,
     );
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox containerBox =
           _containerKey.currentContext!.findRenderObject() as RenderBox;
       _containerWidth = containerBox.size.width;
