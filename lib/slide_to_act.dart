@@ -220,11 +220,6 @@ class SlideActionState extends State<SlideAction>
 
                                     await reset();
 
-                                    _resizeAnimationController.reset();
-                                    _shrinkAnimationController.reset();
-                                    _checkAnimationController.reset();
-                                    _cancelAnimationController.reset();
-
                                     _containerKey = GlobalKey();
                                     _sliderKey = GlobalKey();
 
