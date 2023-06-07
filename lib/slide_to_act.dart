@@ -216,12 +216,12 @@ class SlideActionState extends State<SlideAction>
 
                                     await _checkAnimation();
 
-                                    widget.onSubmit!()?.then((value) {
-                                      _resizeAnimationController.reset();
-                                      _shrinkAnimationController.reset();
-                                      _checkAnimationController.reset();
-                                      _cancelAnimationController.reset();
-                                    });
+                                    await widget.onSubmit?.call();
+
+                                    _resizeAnimationController.reset();
+                                    _shrinkAnimationController.reset();
+                                    _checkAnimationController.reset();
+                                    _cancelAnimationController.reset();
                                   }
                                 },
                                 child: Padding(
