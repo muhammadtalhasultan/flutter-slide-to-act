@@ -205,10 +205,6 @@ class SlideActionState extends State<SlideAction>
                                     ? onHorizontalDragUpdate
                                     : null,
                                 onHorizontalDragEnd: (details) async {
-                                  if (!widget.enabled) {
-                                    return;
-                                  }
-
                                   _endDx = _dx;
                                   if (_progress <= 0.8 ||
                                       widget.onSubmit == null) {
