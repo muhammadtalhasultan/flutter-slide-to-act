@@ -103,8 +103,8 @@ class SlideAction extends StatefulWidget {
 /// Use a GlobalKey to access the state. This is the only way to call [SlideActionState.reset]
 class SlideActionState extends State<SlideAction>
     with TickerProviderStateMixin {
-  GlobalKey _containerKey = GlobalKey();
-  GlobalKey _sliderKey = GlobalKey();
+  final GlobalKey _containerKey = GlobalKey();
+  final GlobalKey _sliderKey = GlobalKey();
   double _dx = 0;
   double _maxDx = 0;
   double get _progress => _dx == 0 ? 0 : _dx / _maxDx;
@@ -219,17 +219,6 @@ class SlideActionState extends State<SlideAction>
                                     await widget.onSubmit?.call();
 
                                     await reset();
-
-                                    setState(() {
-                                      _containerKey = GlobalKey();
-                                      _sliderKey = GlobalKey();
-
-                                      _dx = 0;
-                                      _maxDx = 0;
-                                      _endDx = 0;
-                                      _dz = 1;
-                                      _checkAnimationDx = 0;
-                                    });
                                   }
                                 },
                                 child: Padding(
@@ -238,6 +227,10 @@ class SlideActionState extends State<SlideAction>
                                   child: Material(
                                     borderRadius: BorderRadius.circular(
                                         widget.borderRadius),
+                                    color: widget.innerColor ??
+                                        Theme.of(context)
+                                            .primaryIconTheme
+                                            .color,
                                     child: Container(
                                       padding: EdgeInsets.all(
                                           widget.sliderButtonIconPadding),
@@ -259,10 +252,6 @@ class SlideActionState extends State<SlideAction>
                                         ),
                                       ),
                                     ),
-                                    color: widget.innerColor ??
-                                        Theme.of(context)
-                                            .primaryIconTheme
-                                            .color,
                                   ),
                                 ),
                               ),
