@@ -275,13 +275,13 @@ class SlideActionState extends State<SlideAction>
 
   /// Call this method to revert the animations
   Future reset() async {
-    await _checkAnimationController.reverse().orCancel;
+    await _checkAnimationController.reverse();
 
     submitted = false;
 
-    await _shrinkAnimationController.reverse().orCancel;
+    await _shrinkAnimationController.reverse();
 
-    await _resizeAnimationController.reverse().orCancel;
+    await _resizeAnimationController.reverse();
 
     await _cancelAnimation();
   }
