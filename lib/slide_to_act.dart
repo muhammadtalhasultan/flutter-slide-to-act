@@ -220,6 +220,7 @@ class SlideActionState extends State<SlideAction>
                                       _resizeAnimationController.reset();
                                       _shrinkAnimationController.reset();
                                       _checkAnimationController.reset();
+                                      _cancelAnimationController.reset();
                                     });
                                   }
                                 },
