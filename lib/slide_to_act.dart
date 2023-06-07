@@ -224,7 +224,7 @@ class SlideActionState extends State<SlideAction>
                                       _containerKey = GlobalKey();
                                       _sliderKey = GlobalKey();
 
-                                      _dx = 0.4;
+                                      _dx = 0;
                                       _maxDx = 0;
                                       _endDx = 0;
                                       _dz = 1;
