@@ -18,13 +18,20 @@ class SlideAction extends StatefulWidget {
   /// If the slider icon rotates
   final bool sliderRotate;
 
+  // Wether the user can interact with the slider
+  final bool enabled;
+
   /// The child that is rendered instead of the default Text widget
   final Widget? child;
 
   /// The height of the component
   final double height;
 
-  /// The color of the inner circular button, of the tick icon of the text.
+  /// The color of the text.
+  /// If not set, this attribute defaults to primaryIconTheme.
+  final Color? textColor;
+
+  /// The color of the inner circular button and the tick icon.
   /// If not set, this attribute defaults to primaryIconTheme.
   final Color? innerColor;
 
@@ -37,7 +44,7 @@ class SlideAction extends StatefulWidget {
 
   /// Text style which is applied on the Text widget.
   ///
-  /// By default, the text is colored using [innerColor].
+  /// By default, the text is colored using [textColor].
   final TextStyle? textStyle;
 
   /// The borderRadius of the sliding icon and of the background
@@ -72,7 +79,10 @@ class SlideAction extends StatefulWidget {
     this.sliderButtonIconPadding = 16,
     this.sliderButtonYOffset = 0,
     this.sliderRotate = true,
+    this.enabled = true,
     this.height = 70,
+    this.textColor,
+    this.innerColor,
     this.outerColor,
     this.borderRadius = 52,
     this.elevation = 6,
@@ -82,7 +92,6 @@ class SlideAction extends StatefulWidget {
     this.submittedIcon,
     this.onSubmit,
     this.child,
-    this.innerColor,
     this.text,
     this.textStyle,
     this.sliderButtonIcon,
@@ -173,7 +182,7 @@ class SlideActionState extends State<SlideAction>
                                 textAlign: TextAlign.center,
                                 style: widget.textStyle ??
                                     TextStyle(
-                                      color: widget.innerColor ??
+                                      color: widget.textColor ??
                                           Theme.of(context)
                                               .primaryIconTheme
                                               .color,
@@ -192,6 +201,9 @@ class SlideActionState extends State<SlideAction>
                             child: Container(
                               key: _sliderKey,
                               child: GestureDetector(
+                                behavior: widget.enabled
+                                    ? HitTestBehavior.opaque
+                                    : HitTestBehavior.translucent,
                                 onHorizontalDragUpdate: onHorizontalDragUpdate,
                                 onHorizontalDragEnd: (details) async {
                                   _endDx = _dx;
