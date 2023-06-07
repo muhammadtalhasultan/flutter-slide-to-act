@@ -220,11 +220,11 @@ class SlideActionState extends State<SlideAction>
 
                                     await reset();
 
-                                    _containerKey = GlobalKey();
-                                    _sliderKey = GlobalKey();
-
                                     setState(() {
-                                      _dx = 0;
+                                      _containerKey = GlobalKey();
+                                      _sliderKey = GlobalKey();
+
+                                      _dx = 0.4;
                                       _maxDx = 0;
                                       _endDx = 0;
                                       _dz = 1;
