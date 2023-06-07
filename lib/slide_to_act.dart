@@ -103,8 +103,8 @@ class SlideAction extends StatefulWidget {
 /// Use a GlobalKey to access the state. This is the only way to call [SlideActionState.reset]
 class SlideActionState extends State<SlideAction>
     with TickerProviderStateMixin {
-  final GlobalKey _containerKey = GlobalKey();
-  final GlobalKey _sliderKey = GlobalKey();
+  GlobalKey _containerKey = GlobalKey();
+  GlobalKey _sliderKey = GlobalKey();
   double _dx = 0;
   double _maxDx = 0;
   double get _progress => _dx == 0 ? 0 : _dx / _maxDx;
@@ -218,10 +218,15 @@ class SlideActionState extends State<SlideAction>
 
                                     await widget.onSubmit?.call();
 
+                                    await reset();
+
                                     _resizeAnimationController.reset();
                                     _shrinkAnimationController.reset();
                                     _checkAnimationController.reset();
                                     _cancelAnimationController.reset();
+
+                                    _containerKey = GlobalKey();
+                                    _sliderKey = GlobalKey();
 
                                     setState(() {
                                       _dx = 0;
