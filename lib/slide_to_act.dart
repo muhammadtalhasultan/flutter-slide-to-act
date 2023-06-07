@@ -201,11 +201,14 @@ class SlideActionState extends State<SlideAction>
                             child: Container(
                               key: _sliderKey,
                               child: GestureDetector(
-                                behavior: widget.enabled
-                                    ? HitTestBehavior.opaque
-                                    : HitTestBehavior.translucent,
-                                onHorizontalDragUpdate: onHorizontalDragUpdate,
+                                onHorizontalDragUpdate: widget.enabled
+                                    ? onHorizontalDragUpdate
+                                    : null,
                                 onHorizontalDragEnd: (details) async {
+                                  if (!widget.enabled) {
+                                    return;
+                                  }
+
                                   _endDx = _dx;
                                   if (_progress <= 0.8 ||
                                       widget.onSubmit == null) {
