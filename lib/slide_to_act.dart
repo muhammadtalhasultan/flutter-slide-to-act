@@ -218,6 +218,8 @@ class SlideActionState extends State<SlideAction>
 
                                     await widget.onSubmit?.call();
 
+                                    _dx = 0;
+
                                     _resizeAnimationController.reset();
                                     _shrinkAnimationController.reset();
                                     _checkAnimationController.reset();
