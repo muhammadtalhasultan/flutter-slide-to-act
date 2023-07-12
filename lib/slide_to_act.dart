@@ -382,7 +382,7 @@ class SlideActionState extends State<SlideAction>
       duration: widget.animationDuration,
     );
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox containerBox =
           _containerKey.currentContext!.findRenderObject() as RenderBox;
       _containerWidth = containerBox.size.width;
