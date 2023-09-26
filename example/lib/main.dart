@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Slide to act Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -41,7 +42,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                   ),
@@ -58,7 +59,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                     innerColor: Colors.black,
@@ -77,7 +78,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                     alignment: Alignment.centerRight,
@@ -102,7 +103,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                     height: 100,
@@ -120,7 +121,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                     sliderButtonIconSize: 48,
@@ -139,7 +140,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                     elevation: 24,
@@ -157,7 +158,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                     borderRadius: 16,
@@ -176,7 +177,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                     reversed: true,
@@ -194,7 +195,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                     submittedIcon: Icon(
@@ -215,7 +216,7 @@ class HomePage extends StatelessWidget {
                     onSubmit: () {
                       Future.delayed(
                         Duration(seconds: 1),
-                        () => _key.currentState.reset(),
+                        () => _key.currentState!.reset(),
                       );
                     },
                   ),
