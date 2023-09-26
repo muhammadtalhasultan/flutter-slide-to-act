@@ -18,18 +18,25 @@ class SlideAction extends StatefulWidget {
   /// If the slider icon rotates
   final bool sliderRotate;
 
+  // Wether the user can interact with the slider
+  final bool enabled;
+
   /// The child that is rendered instead of the default Text widget
   final Widget? child;
 
   /// The height of the component
   final double height;
 
-  /// The color of the inner circular button, of the tick icon of the text.
+  /// The color of the text.
+  /// If not set, this attribute defaults to primaryIconTheme.
+  final Color? textColor;
+
+  /// The color of the inner circular button and the tick icon.
   /// If not set, this attribute defaults to primaryIconTheme.
   final Color? innerColor;
 
   /// The color of the external area and of the arrow icon.
-  /// If not set, this attribute defaults to accentColor from your theme.
+  /// If not set, this attribute defaults to the secondary color of your theme's colorScheme.
   final Color? outerColor;
 
   /// The text showed in the default Text widget
@@ -37,7 +44,7 @@ class SlideAction extends StatefulWidget {
 
   /// Text style which is applied on the Text widget.
   ///
-  /// By default, the text is colored using [innerColor].
+  /// By default, the text is colored using [textColor].
   final TextStyle? textStyle;
 
   /// The borderRadius of the sliding icon and of the background
@@ -45,7 +52,7 @@ class SlideAction extends StatefulWidget {
 
   /// Callback called on submit
   /// If this is null the component will not animate to complete
-  final VoidCallback? onSubmit;
+  final Future? Function()? onSubmit;
 
   /// Elevation of the component
   final double elevation;
@@ -72,7 +79,10 @@ class SlideAction extends StatefulWidget {
     this.sliderButtonIconPadding = 16,
     this.sliderButtonYOffset = 0,
     this.sliderRotate = true,
+    this.enabled = true,
     this.height = 70,
+    this.textColor,
+    this.innerColor,
     this.outerColor,
     this.borderRadius = 52,
     this.elevation = 6,
@@ -82,7 +92,6 @@ class SlideAction extends StatefulWidget {
     this.submittedIcon,
     this.onSubmit,
     this.child,
-    this.innerColor,
     this.text,
     this.textStyle,
     this.sliderButtonIcon,
@@ -173,7 +182,7 @@ class SlideActionState extends State<SlideAction>
                                 textAlign: TextAlign.center,
                                 style: widget.textStyle ??
                                     TextStyle(
-                                      color: widget.innerColor ??
+                                      color: widget.textColor ??
                                           Theme.of(context)
                                               .primaryIconTheme
                                               .color,
@@ -192,7 +201,9 @@ class SlideActionState extends State<SlideAction>
                             child: Container(
                               key: _sliderKey,
                               child: GestureDetector(
-                                onHorizontalDragUpdate: onHorizontalDragUpdate,
+                                onHorizontalDragUpdate: widget.enabled
+                                    ? onHorizontalDragUpdate
+                                    : null,
                                 onHorizontalDragEnd: (details) async {
                                   _endDx = _dx;
                                   if (_progress <= 0.8 ||
@@ -205,7 +216,9 @@ class SlideActionState extends State<SlideAction>
 
                                     await _checkAnimation();
 
-                                    widget.onSubmit!();
+                                    await widget.onSubmit?.call();
+
+                                    await reset();
                                   }
                                 },
                                 child: Padding(
@@ -214,6 +227,10 @@ class SlideActionState extends State<SlideAction>
                                   child: Material(
                                     borderRadius: BorderRadius.circular(
                                         widget.borderRadius),
+                                    color: widget.innerColor ??
+                                        Theme.of(context)
+                                            .primaryIconTheme
+                                            .color,
                                     child: Container(
                                       padding: EdgeInsets.all(
                                           widget.sliderButtonIconPadding),
@@ -234,10 +251,6 @@ class SlideActionState extends State<SlideAction>
                                         ),
                                       ),
                                     ),
-                                    color: widget.innerColor ??
-                                        Theme.of(context)
-                                            .primaryIconTheme
-                                            .color,
                                   ),
                                 ),
                               ),
@@ -261,13 +274,13 @@ class SlideActionState extends State<SlideAction>
 
   /// Call this method to revert the animations
   Future reset() async {
-    await _checkAnimationController.reverse().orCancel;
+    await _checkAnimationController.reverse();
 
     submitted = false;
 
-    await _shrinkAnimationController.reverse().orCancel;
+    await _shrinkAnimationController.reverse();
 
-    await _resizeAnimationController.reverse().orCancel;
+    await _resizeAnimationController.reverse();
 
     await _cancelAnimation();
   }
@@ -290,7 +303,7 @@ class SlideActionState extends State<SlideAction>
         });
       }
     });
-    await _checkAnimationController.forward().orCancel;
+    await _checkAnimationController.forward();
   }
 
   Future _shrinkAnimation() async {
@@ -316,7 +329,7 @@ class SlideActionState extends State<SlideAction>
     setState(() {
       submitted = true;
     });
-    await _shrinkAnimationController.forward().orCancel;
+    await _shrinkAnimationController.forward();
   }
 
   Future _resizeAnimation() async {
@@ -337,7 +350,7 @@ class SlideActionState extends State<SlideAction>
         });
       }
     });
-    await _resizeAnimationController.forward().orCancel;
+    await _resizeAnimationController.forward();
   }
 
   Future _cancelAnimation() async {
@@ -357,7 +370,7 @@ class SlideActionState extends State<SlideAction>
         });
       }
     });
-    _cancelAnimationController.forward().orCancel;
+    _cancelAnimationController.forward();
   }
 
   @override
