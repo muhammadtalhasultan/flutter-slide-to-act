@@ -225,6 +225,24 @@ class HomePage extends StatelessWidget {
             ),
             Builder(
               builder: (context) {
+                final GlobalKey<SlideActionState> _key = GlobalKey();
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SlideAction(
+                    key: _key,
+                    trigger: 0.3,
+                    onSubmit: () {
+                      Future.delayed(
+                        Duration(seconds: 1),
+                        () => _key.currentState!.reset(),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+            Builder(
+              builder: (context) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SlideAction(
